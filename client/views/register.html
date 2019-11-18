@@ -1,0 +1,49 @@
+<html>
+
+<head>
+    <title> Registration</title>
+    <link rel="stylesheet" href="../assets/css/style.css">
+</head>
+<!-- specifies the contents of registration form -->
+
+<body ng-controller="registrationCntr">
+    <div class="container">
+        <div class="row">
+
+            <div class="form-group">
+                <h3 class="title"> Registration for ChatApp</h3>
+                <form>
+                    <div class="form-group">
+                        <input type="text" name="firstName" class="form-control" ng-model="firstName"
+                            placeholder=" first name:Raju" style="width:300px" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="text" class="form-control" name="lastName" ng-model="lastName"
+                            placeholder="Lastname:Sharma" style="width:300px" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="email" class="form-control" name="email" ng-model="email"
+                            placeholder="abcd@gmail.com" style="width:300px" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="password" class="form-control" center name="password" ng-model="password"
+                            placeholder="password" style="width:300px" required>
+                    </div>
+                    <p><span> {{result}}</span></p>
+
+                    <div>
+                        <button ng-click="register()" class="register-button"> Register</button>
+
+                    </div>
+                    <div>
+                        <button class="register-button" ng-click="pageChange()">
+                            SignIn
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

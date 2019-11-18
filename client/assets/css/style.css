@@ -1,0 +1,68 @@
+/*stop allign the attributes to the center*/
+h1 {
+    text-align: center;
+}
+
+/* specs for form */
+
+#body-color {
+    background-color: sandybrown;
+    height: 90%;
+}
+
+/* specifies border */
+.border {
+    border: thick blue solid;
+    margin: 20px;
+    padding: 20px;
+    text-align: center;
+}
+
+div {
+
+    margin: 5pt;
+    padding: 1pt;
+    text-align: center;
+}
+
+#navi-color {
+    background-color: rgb(0, 183, 255);
+    display: block;
+    margin: 0;
+    padding: 0;
+
+}
+
+#navi-color-body {
+    background-color: rgb(0, 183, 255);
+    display: block;
+    margin: 0;
+    padding: 0;
+    height: 300px;
+    overflow-y: scroll;
+    text-align: center;
+
+}
+
+
+.register-button {
+    background-color: goldenrod;
+    color: white;
+    padding: 16px 20px;
+    margin: 8px 0;
+    border: none;
+    cursor: pointer;
+    width: 50%;
+    opacity: 0.9;
+    text-align: center;
+}
+
+
+.text {
+    background-color: aquamarine;
+    color: white;
+    padding: 8px 12px;
+    width: 40%;
+    opacity: 0.9;
+    text-align: center;
+}
