@@ -24,19 +24,14 @@ app.config(function ($routeProvider) {
             controller: "resetPasswordCtrl"
 
         })
-        .when('/userDashbord', {
-            templateUrl: "./views/userDashbord.html",
-            controller: "listUsers"
-
-        })
-        .when('/groupChat', {
-            templateUrl: "./views/groupChat.html",
-            controller: "listUsers"
+        .when('/dashBoard', {
+            templateUrl: "./views/dashBoard.html",
+            controller: "chatCtrl"
 
         })
         .when('/redirect', {
-            templateUrl: "./views/userDashbord.html",
-            controller: "listUsers"
+            templateUrl: "./views/dashBoard.html",
+            controller: "chatCtrl"
 
         })
         .otherwise({

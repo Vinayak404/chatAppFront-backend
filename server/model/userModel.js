@@ -78,17 +78,18 @@ exports.Login = (req, callback) => {
         "email": req.body.email
     }, (err, data) => {
         if (data) {
-            bcrypt.compare(req.body.password, data.password, (err, sucess) => {
-                if (sucess)
+            bcrypt.compare(req.body.password, data.password, (err, success) => {
+                if (success)
                     callback(null, data);
                 else
-                    callback("password is incorrect");
+                    callback("password is incorrect", err);
             })
         } else callback("email doesnot match");
     })
 
 }
-//
+//Takes email from the user and checks if the user already exists, and then creates a token with the user id and 
+// send it along the rest url to that email.
 exports.ForgotPassword = (req, callback) => {
     register.findOne({
         "email": req.body.email
@@ -102,7 +103,7 @@ exports.ForgotPassword = (req, callback) => {
     })
 
 }
-
+// This will take the new password from the user and updates it .
 exports.ResetPassword = (req, callback) => {
     bcrypt.hash(req.body.password, 10, (err, encrypted) => {
         register.updateOne({
@@ -121,7 +122,7 @@ exports.ResetPassword = (req, callback) => {
 
 }
 
-
+//returs all the users of this app 
 exports.getUsers = (req, callback) => {
     try {
 
@@ -136,42 +137,43 @@ exports.getUsers = (req, callback) => {
         console.log(e)
     }
 }
-
+// takes in the message,receiver and the recipient and stores it the dataBase
 exports.sendMessage = (req, callback) => {
     try {
         console.log("model s");
-        bcrypt.hash(req.body.msg, 10, (err, encrypted) => {
-            console.log('model', req.body.from)
-            var letter = new textModel({
-                'from': req.body.from,
-                'to': req.body.to,
-                'msg': encrypted
-            })
-            letter.save((err, data) => {
-                if (err) callback(err)
-                else callback(data)
-            })
+        console.log('model', req.body.from)
+        var letter = new textModel({
+            'from': req.body.from,
+            'to': req.body.to,
+            'msg': req.body.msg
+        })
+        letter.save((err, data) => {
+            if (err) callback(err)
+            else callback(data)
         })
     } catch (e) {
         console.log(e)
     }
 }
 
-// check in database for all the message between the 2 users and callback them
+// check in database for all the messages between the 2 users and callback them
 exports.getMessage = (req, callback) => {
     try {
         textModel.find({
-            $or: [{
-                'from': req.body.from,
-                'to': req.body.to
-            }, {
-                'from': req.body.to,
-                'to': req.body.from
-            }]
-        }), (err, data) => {
-            if (err) callback(err)
-            else console.log(data), callback(null, data)
-        }
+                $or: [{
+                    'from': req.body.from,
+                    'to': req.body.to
+                }, {
+                    'from': req.body.to,
+                    'to': req.body.from
+                }]
+            }).then((data) => {
+                callback(data)
+            })
+            .catch((err) => {
+                callback(err)
+            })
+
     } catch (e) {
         console.log(e);
     }

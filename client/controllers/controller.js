@@ -1,20 +1,21 @@
-
 // Controllers for each of the APIs
-app.controller("loginCtrl", function ($scope, servicesLogin) {
-    $scope.submit = () => {
+app.controller("loginCtrl", function ($scope, services) {
+    $scope.login = () => {
+        console.log('in login ctrl');
+
         var data = {
             "email": $scope.email,
             "password": $scope.password
         }
         console.log("data", data);
-        servicesLogin.login(data, $scope);
+        services.login(data, $scope);
     }
 });
 
 
 
-app.controller("registrationCntr", function ($scope, $location, servicesLogin) {
-   
+app.controller("registrationCntr", function ($scope, $location, services) {
+
     $scope.register = () => {
         var data = {
             "firstName": $scope.firstName,
@@ -22,9 +23,9 @@ app.controller("registrationCntr", function ($scope, $location, servicesLogin) {
             "email": $scope.email,
             "password": $scope.password
         }
-        servicesLogin.register(data, $scope);
+        services.register(data, $scope);
     }
-   // redirecting to the login page after a successfull login
+    // redirecting to the login page after a successfull login
     $scope.pageChange = () => {
         $location.path("/#!/login");
     }
@@ -32,35 +33,45 @@ app.controller("registrationCntr", function ($scope, $location, servicesLogin) {
 
 
 
-app.controller("forgotPasswordCtrl", function ($scope, servicesLogin) {
-   
+app.controller("forgotPasswordCtrl", function ($scope, services) {
+
     $scope.forgotPassword = () => {
         var data = {
             "email": $scope.email
         }
-        servicesLogin.forgotPassword(data, $scope);
+        services.forgotPassword(data, $scope);
     }
 });
 
 
 
-app.controller("resetPasswordCtrl", function ($scope, servicesLogin, $location) {
+app.controller("resetPasswordCtrl", function ($scope, services, $location) {
     //Checks if the token is present
+    console.log('TokenController');
+
     if ($location.url().indexOf('token') !== -1) {
         $scope.token = $location.url().split('=')[1];
-        console.log("Token :", $scope.token)
+        console.log("Token :", window.location.href())
     }
-   
+
     $scope.resetPassword = () => {
-        if ($scope.Password == null || $scope.confirmPassword == null) {
-            $scope.result = "Passwords Cant be null";
-        }
-        else {
+        if ($scope.password == null || $scope.confirmPassword == null) {
+            $scope.result = "password cant be empty";
+        } else {
             var data = {
                 "password": $scope.password,
                 "confirmPassword": $scope.confirmPassword
             }
-            servicesLogin.resetPassword(data, $scope);
+            services.resetPassword(data, $scope);
         }
     }
 });
+
+app.controller('chatCtrl', ($scope, services) => {
+    try {
+        services.getUsers($scope)
+    } catch (e) {
+        console.log(e);
+
+    }
+})

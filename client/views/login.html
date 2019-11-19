@@ -24,15 +24,13 @@
                             <p style="text-align:right">
                                 <a href="#!/forgotPassword"><small>ForgotPassword</small></a></p>
                         </div>
-                        <div class="form-group">
+                        <div class="form-group"><button ng-click="login()" class="register-button"><label for="Log-In">
+                                    Log-in</label></button>
+                        </div>
+                        <a href="#!/register"><label>Don't have an account?Sign in</label></a>
 
-                            <div> <button ng-click="submit()" class="register-button"><label for="submit">
-                                        Log-in</label></button>
-                            </div>
-                            <a href="#!/register"><label>Don't have an account?Sign in</label></a>
-
-                            <p> {{result}}
-                            </p>
+                        <p> {{result}}
+                        </p>
 
                     </form>
                 </div>

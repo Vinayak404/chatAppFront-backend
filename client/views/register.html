@@ -1,17 +1,18 @@
 <html>
 
 <head>
-    <title> Registration</title>
+    <h1 class="title" id="title">Registration</h1>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
     <link rel="stylesheet" href="../assets/css/style.css">
 </head>
 <!-- specifies the contents of registration form -->
 
 <body ng-controller="registrationCntr">
     <div class="container">
-        <div class="row">
+        <div class="rows">
 
             <div class="form-group">
-                <h3 class="title"> Registration for ChatApp</h3>
                 <form>
                     <div class="form-group">
                         <input type="text" name="firstName" class="form-control" ng-model="firstName"

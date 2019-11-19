@@ -1,0 +1,32 @@
+<html>
+
+<head>
+    <h1 class="title" id="title">Chat Page</h1>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../assets/css/style.css">
+
+</head>
+
+<body>
+    <div ng-controller="getUsersCtrl" class="page">
+        Welcome back,{{firstName}}
+        <div class="buttonas"><button class="button" ng-click=login()>Log-Out</button></div>
+        <div class="UsersmessageBox">
+            <div class='getUsers'>
+                {{getUsers}}
+            </div>
+            <div class="messageWindow">
+                <div class="messages">
+                    {{msg}}
+                </div>
+                <div class="sendMsg">
+                    <input type="text" class="form-control1" ng-model="msg" placeholder="Type your messages here"
+                        style="width:300px">
+                    <button ng-click="sendMessage()" class="register-button"> Send</button> </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

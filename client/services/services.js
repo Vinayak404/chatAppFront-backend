@@ -1,20 +1,25 @@
-app.service('servicesLogin', function ($http, $location) {
+app.service('services', function ($http, $location) {
 
 
     this.login = (data, $scope) => {
         try {
+
+            console.log('here in login services');
             //uses http to send request via json file havinf method, url and login data.
             $http({
                 method: 'POST',
                 url: 'http://localhost:3000/login',
                 data: data
             }).then(function sucessCallback(response) {
+
+                    console.log('here in login services');
+
                     let user = response.data[0];
-                    $location.path("/userDashbord");
                     localStorage.setItem('user', JSON.stringify(user));
                     console.log("Login sucessfull", response);
+                    $location.path('/dashBoard')
                 },
-                function errrCallback(response) {
+                function errorCallback(response) {
                     $scope.result = "Please check the login details";
                     console.log("Login failed", response);
                 });
@@ -35,7 +40,7 @@ app.service('servicesLogin', function ($http, $location) {
                 //path will direct the next path.
                 $location.path("/login");
                 console.log("Registeration successful", response);
-            }, function errrCallback(response) {
+            }, function errorCallback(response) {
                 if ($scope.email != null)
                     $scope.result = response.data;
                 else
@@ -48,10 +53,6 @@ app.service('servicesLogin', function ($http, $location) {
 
     }
 
-
-
-
-
     this.forgotPassword = (data, $scope) => {
         try {
             $http({
@@ -61,7 +62,7 @@ app.service('servicesLogin', function ($http, $location) {
             }).then(function sucessCallback(response) {
                 $scope.result = "Verification link sent to mail "
                 console.log("Verifiation successful", response);
-            }).catch(function errrCallback(response) {
+            }).catch(function errorCallback(response) {
                 if ($scope.email == null)
                     $scope.result = response.data.error[0].msg;
                 else
@@ -78,21 +79,44 @@ app.service('servicesLogin', function ($http, $location) {
 
     this.resetPassword = (data, $scope) => {
         try {
+            var url = window.location.href;
+            console.log('at reset service');
+            var token = url.split('/');
+            var token1 = token[5]
+
             $http({
                 method: 'POST',
-                url: 'http://localhost:3000/resetpassword' + $scope.token,
+                url: `http://localhost:3000/resetpassword/${token1}`,
                 data: data
             }).then(function sucessCallback(response) {
                     $scope.result = "Changes updated";
                     console.log("changes updated", response.status);
                 },
-                function errrCallback(response) {
-                    if ($scope.Password == null && $scope.confirmPassword == null)
+                function errorCallback(response) {
+                    if ($scope.password == null && $scope.confirmPassword == null)
                         $scope.result = response.data.error[0].msg;
                     else
                         $scope.result = "passwords dont match";
                     console.log("reset failed", response);
                 });
+        } catch (e) {
+            console.log(e);
+        }
+    }
+    this.getUsers = ($scope) => {
+        try {
+            console.log(process.env.GETUSERSURL);
+
+            $http({
+                method: "GET",
+                url: 'http://localhost:3000/dashBoard'
+            }).then((data) => {
+                $scope.result = "all users returned"
+                console.log(data)
+            }).catch((err) => {
+                $scope.result = "request failed"
+                console.log(err)
+            })
         } catch (e) {
             console.log(e);
         }
