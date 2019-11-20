@@ -4,27 +4,26 @@ app.service('services', function ($http, $location) {
     this.login = (data, $scope) => {
         try {
 
-            console.log('here in login services');
+            console.log('here in login services', data);
             //uses http to send request via json file havinf method, url and login data.
             $http({
                 method: 'POST',
                 url: 'http://localhost:3000/login',
                 data: data
-            }).then(function sucessCallback(response) {
-
-                    console.log('here in login services');
-
-                    let user = response.data[0];
-                    localStorage.setItem('user', JSON.stringify(user));
-                    console.log("Login sucessfull", response);
-                    $location.path('/dashBoard')
-                },
-                function errorCallback(response) {
-                    $scope.result = "Please check the login details";
-                    console.log("Login failed", response);
-                });
+            }).then((response) => {
+                console.log('here in login services', response);
+                let user = response.data.data
+                console.log("data jhg=>", user.email);
+                // let email = user.email;
+                localStorage.setItem('user', user.email);
+                console.log("Login sucessfull", response);
+                $location.path('/dashBoard')
+            }).catch((response) => {
+                $scope.result = "Please check the login details";
+                console.log("Login failed", response);
+            });
         } catch (e) {
-            console.log(e);
+            console.log("cfsdf", e);
         }
     }
 

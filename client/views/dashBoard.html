@@ -9,21 +9,65 @@
 </head>
 
 <body>
-    <div ng-controller="getUsersCtrl" class="page">
-        Welcome back,{{$scope.userName}}
-        <div class="buttonas"><button class="button" ng-click=pageChange()>Log-Out</button></div>
-        <div class="UsersmessageBox">
+    <div ng-controller='controllerChat' class="page">
+        <label class="display-5">
+            <strong>Welcome back,{{userName}}</strong>
+        </label>
+        <div class="buttonas"><button class="button" ng-click="logout()">
+                <a href='http://localhost:3000/#!/login'>Log-Out</a></div></button>
+        <div class=" UsersmessageBox">
             <div class='getUsers'>
-                {{getUsers}}
+                <div>
+                    <ol ng-repeat='user in allUsers'>
+                        <li ng-click="person(user.firstName)">
+                            {{user.firstName}}
+                        </li>
+                    </ol>
+                </div>
+                <!-- <div class='rows'>
+                    <div>
+                        <div class='button' id="navi-color-body">
+                            <button class='button'>
+                                <strong>{{receiverEmail}}</strong>
+                            </button>
+                            <div ng-repeat='chat in msgs' class="chat">
+                                <p class="chatMsg" ng-show="chat.from!=userEmail"
+                                    style="text-align: left ;color:blueviolet">
+                                    {{chat.from}}:::<strong>{{chat.msg}}</strong></chat>
+                                </p>
+                                <p class="chatMsg" ng-show="chat.from==userEmail"
+                                    style="text-align: right;color:darkred">
+                                    <strong>{{chat.msg}}</strong></p>
+                            </div>
+                        </div>
+                    </div>
+                </div> -->
             </div>
             <div class="messageWindow">
                 <div class="messages">
-                    {{msg}}
+                    <div class='rows'>
+                        <div>
+                            <div>
+                                <button class='button'>
+                                    <strong>{{receiverEmail}}</strong>
+                                </button>
+                                <div ng-repeat='chat in msgs' class="chat">
+                                    <p class="chatMsg" ng-show="chat.from!=userEmail"
+                                        style="text-align: left ;color:blueviolet">
+                                        {{chat.from}}=><strong>{{chat.msg}}</strong></chat>
+                                    </p>
+                                    <p class="chatMsg" ng-show="chat.from==userEmail"
+                                        style="text-align: right;color:darkred">
+                                        <strong>{{chat.msg}}</strong></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 <div class="sendMsg">
-                    <input type="text" class="form-control1" ng-model="msg" placeholder="Type your messages here"
-                        style="width:300px">
-                    <button ng-click="sendMessage()" class="register-button"> Send</button> </div>
+                    <input type="text" name="msg" ng-model="msg1" placeholder="Type your messages here"
+                        style="width:300px" ng-keyup='$event.KeyCode==13 && storeMsg()'>
+                    <button ng-click="storeMsg()" class="register-button"> Send</button> </div>
             </div>
         </div>
     </div>

@@ -26,7 +26,7 @@ app.config(function ($routeProvider) {
         })
         .when('/dashBoard', {
             templateUrl: "./views/dashBoard.html",
-            controller: "chatCtrl"
+            controller: 'controllerChat'
 
         })
         // .when('/redirect', {

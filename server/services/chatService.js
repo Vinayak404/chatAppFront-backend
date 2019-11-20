@@ -1,4 +1,4 @@
-var model = require('../model/chatModel')
+var model = require('../model/userModel')
 exports.getUsers = (req, callBack) => {
     try {
 

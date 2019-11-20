@@ -141,6 +141,7 @@ div {
     background-color: azure;
     border-radius: 30px;
     color: black;
+    overflow-y: scroll;
 }
 
 .form-control1 {
