@@ -3,10 +3,8 @@ app.controller('controllerChat', function ($scope, chatService, SocketService) {
         chatService.getUserName($scope);
         chatService.getUsers($scope);
 
-        /**
-         * @description:to validate and the pass the controller to service
-         * @param:$scope,chatService,socketService
-         */
+        //to validate and call service
+
 
         $scope.storeMsg = () => {
             try {
@@ -28,10 +26,6 @@ app.controller('controllerChat', function ($scope, chatService, SocketService) {
                 console.log(e);
             }
         }
-        //:to validate and the pass the controller to service
-
-
-
         $scope.person = (value) => {
             try {
                 $scope.value = value;
