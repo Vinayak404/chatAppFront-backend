@@ -2,7 +2,7 @@ var app = angular.module("myApp", ["ngRoute", 'btford.socket-io']);
 
 //Routing paths
 app.config(function ($routeProvider) {
-    console.log("route.ts")
+    console.log("in routeprovider")
 
     $routeProvider
         .when('/', {
@@ -29,11 +29,11 @@ app.config(function ($routeProvider) {
             controller: "chatCtrl"
 
         })
-        .when('/redirect', {
-            templateUrl: "./views/dashBoard.html",
-            controller: "chatCtrl"
+        // .when('/redirect', {
+        //     templateUrl: "./views/dashBoard.html",
+        //     controller: "chatCtrl"
 
-        })
+        // })
         .otherwise({
             redirectTo: "/"
         });

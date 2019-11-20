@@ -54,8 +54,8 @@ app.service("chatService", function ($http, SocketService) {
                 $scope.userEmail = loginDetails.email;
                 $scope.userName = loginDetails.firstName;
                 console.log(loginDetails);
-                console.log("email ", $scope.userEmail);
-                console.log("username: ", $scope.userName);
+                console.log("email", $scope.userEmail);
+                console.log("username:", $scope.userName);
             } catch (e) {
                 console.log(e);
             }
