@@ -1,4 +1,5 @@
 var model = require('../model/userModel')
+//redirects to the model where it fetches all the users of the chatapp
 exports.getUsers = (req, callBack) => {
     try {
 
@@ -13,6 +14,7 @@ exports.getUsers = (req, callBack) => {
         console.log(e)
     }
 }
+//redirects to the model where it takes the message from the user ,from,to and stores it in the database
 exports.sendMessage = (req, callback) => {
     try {
         console.log("get user in services");
@@ -25,7 +27,7 @@ exports.sendMessage = (req, callback) => {
     }
 }
 
-// call the model to fetch the chat between 2 users
+//redirects to the model where it fetches the chat between 2 users from the database.
 exports.getMessage = (req, callback) => {
     try {
         model.getMessage(req, (err, data) => {

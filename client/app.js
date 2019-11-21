@@ -29,16 +29,11 @@ app.config(function ($routeProvider) {
             controller: 'controllerChat'
 
         })
-        // .when('/redirect', {
-        //     templateUrl: "./views/dashBoard.html",
-        //     controller: "chatCtrl"
 
-        // })
         .otherwise({
             redirectTo: "/"
         });
 });
-
 
 app.service('SocketService', ['socketFactory', function SocketService(socketFactory) {
     return socketFactory({

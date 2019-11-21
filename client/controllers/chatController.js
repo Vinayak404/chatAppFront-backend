@@ -22,16 +22,16 @@
                  console.log("store message controller");
                  let Allmsg = JSON.parse(localStorage.getItem('msgData'));
                  console.log("all messaages", Allmsg);
-                 var data = {
+                 var chat = {
                      "from": $scope.userEmail,
                      "to": Allmsg.to,
                      "message": $scope.msg
                  }
                  //emiting the socket event
-                 SocketService.emit("storemsg", data);
+                 SocketService.emit("storemsg", chat);
                  //catching the emited socket event
-                 SocketService.on("updatedata", (data) => {
-                     $scope.msg.push(data)
+                 SocketService.on("updatedata", (chat) => {
+                     $scope.msg.push(chat)
                  })
              } catch (e) {
                  console.log(e);

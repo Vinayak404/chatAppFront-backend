@@ -51,12 +51,12 @@
                                 <button class='button'>
                                     <strong>{{receiverEmail}}</strong>
                                 </button>
-                                <div ng-repeat='chat in msgs' class="chat">
-                                    <p class="chatMsg" ng-show="chat.from!=userEmail"
+                                <div ng-repeat=' messageDetails in msgs' class="chat">
+                                    <p class="chatMsg" ng-show="messageDetails.from!=userEmail"
                                         style="text-align: left ;color:blueviolet">
                                         {{chat.from}}=><strong>{{chat.msg}}</strong></chat>
                                     </p>
-                                    <p class="chatMsg" ng-show="chat.from==userEmail"
+                                    <p class="chatMsg" ng-show="messageDetails.from==userEmail"
                                         style="text-align: right;color:darkred">
                                         <strong>{{chat.msg}}</strong></p>
                                 </div>
@@ -65,7 +65,7 @@
                     </div>
                 </div>
                 <div class="sendMsg">
-                    <input type="text" name="msg" ng-model="msg1" placeholder="Type your messages here"
+                    <input type="text" name="msg" ng-model="msg" placeholder="Type your messages here"
                         style="width:300px" ng-keyup='$event.KeyCode==13 && storeMsg()'>
                     <button ng-click="storeMsg()" class="register-button"> Send</button> </div>
             </div>

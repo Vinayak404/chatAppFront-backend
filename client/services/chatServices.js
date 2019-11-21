@@ -1,6 +1,6 @@
 app.service("chatService", function ($http, SocketService) {
     try {
-        this.getUsers = function ($scope) {
+        this.getUsers = function () {
             console.log("service in getAllUser");
             return $http({
                 method: 'GET',
@@ -14,13 +14,13 @@ app.service("chatService", function ($http, SocketService) {
             try {
                 let data = {
                     "from": $scope.userEmail,
-                    "to": value.receiverEmail
+                    "to": $scope.receiverEmail
                 };
                 localStorage.setItem('msgData', JSON.stringify(data));
                 console.log("message details", data);
-                $http({
+                return $http({
                     method: 'GET',
-                    url: 'http://localhost:3000/getMsg',
+                    url: 'http://localhost:3000/getMessage',
                     data: data
                 });
             } catch (e) {
