@@ -13,8 +13,6 @@ exports.register = (req, callback) => {
     }
 }
 
-
-
 exports.login = (req, callback) => {
     try {
         model.Login(req, (err, data) => {

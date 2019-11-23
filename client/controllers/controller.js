@@ -1,3 +1,12 @@
+/**
+ * @desc operation starts when controller is invoked
+ * @param loginCtrl, ,invokes when the login is successfull 
+ * @param registerCtrl, ,invokes when the register is invoked
+ * @param forgotPasaswordCtrl, ,invokes when the forgot password is invoked
+ * @param resetPasswordCtrl, ,invokes when the the url link in invoked.   
+ * @param $scope ,inheriates the parent process $rootScope,which can be used throught this session.
+ */
+
 // Controllers for each of the APIs
 app.controller("loginCtrl", function ($scope, services) {
     $scope.login = () => {

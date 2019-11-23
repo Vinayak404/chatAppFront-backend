@@ -1,58 +1,127 @@
- app.controller('controllerChat', function ($scope, chatService, SocketService) {
-     try {
+app.controller('controllerChat', function ($scope, getUserService, SocketService, $http) {
+    console.log('get user controller called...');
+    $scope.msgData = []
+    $scope.getUser = ($scope) => {
+        getUserService.getUserServiceData($scope);
+    }
+    $scope.getUser($scope);
 
-         $scope.userName = localStorage.getItem('user');
-         console.log('in chat controller');
+    /**  
+     * get msg controller
+     */
+    $scope.person = function (x) {
+        localStorage.setItem('receiverId', x._id);
+        localStorage.setItem('receiverName', x.firstName);
+        $scope.getUserMsg();
+    }
+    /**
+     * this method will call get user msg service
+     */
+    $scope.getUserMsg = function () {
+        getUserService.getUserMsgService($scope);
+    }
 
-         chatService.getUserName($scope);
-         chatService.getUsers().then(function successfulCallback(response) {
-             $scope.allUsers = response.data.filter((friendsID) => {
-                     return $scope.userName != friendsID
-                 }),
+    /**
+     * send msg controller
+     */
+    $scope.sendMsg = function () {
+        let sendMsgData = {
+            from: localStorage.getItem('senderId'),
+            to: localStorage.getItem('receiverId'),
+            msg: $scope.msg
+        }
+        console.log("send msg data--", sendMsgData)
+        SocketService.emit("newMsg", sendMsgData);
+        $scope.msgData.push(sendMsgData);
+    }
+    /**
+     * listining event
+     */
+    var senderId = localStorage.getItem('loginId');
+    SocketService.on(senderId, function (message) {
+        console.log(" message emitted from server ----->", message);
+        if (localStorage.getItem('receiverId') == message.to) {
+            if ($scope.msgData === undefined) {
+                $scope.msgData = message; //assighning message to variable
+            } else {
+                $scope.msgData.push(message);
+                console.log("  in else--->  ", $scope.msgData);
+            }
+        }
+    })
 
-                 function errorCallback(err) {
-                     $scope.value = 'User not registered'
-                     console.log(err);
-                 }
-         })
+    /**
+     * to clear input texr area
+     */
+    $scope.clearTextArea = function () {
+        console.log('in clear test area');
+        $scope.msg = '';
+    }
 
-         //to validate and call service
-         $scope.storeMsg = () => {
-             try {
-                 console.log("store message controller");
-                 let Allmsg = JSON.parse(localStorage.getItem('msgData'));
-                 console.log("all messaages", Allmsg);
-                 var chat = {
-                     "from": $scope.userEmail,
-                     "to": Allmsg.to,
-                     "message": $scope.msg
-                 }
-                 //emiting the socket event
-                 SocketService.emit("storemsg", chat);
-                 //catching the emited socket event
-                 SocketService.on("updatedata", (chat) => {
-                     $scope.msg.push(chat)
-                 })
-             } catch (e) {
-                 console.log(e);
-             }
-         }
-         $scope.person = (receiverEmail) => {
-             try {
-                 $scope.receiverEmail = receiverEmail;
-                 console.log("scope value: ", $scope.receiverEmail);
-                 chatService.getUserMsg($scope).then(function (response) {
-                     $scope.msgs = response.data;
-                     SocketService.emit('updated in service', response.data)
-                 }, function errorCallback(err) {
-                     $scope.value = "not registered"
-                     console.log('failed', err);
-                 });
-             } catch (e) {
-                 console.log(e);
-             }
-         }
-     } catch (e) {
-         console.log(e);
-     }
- });
+    $scope.logout = function () {
+        $location.path('/login');
+    }
+
+});
+
+
+
+
+
+
+
+// /**
+//  * @desc operation starts when chatContrtoller is invoked.
+//  * @param userName ,when invoked,fetches the user name from the local storage.
+//  * @param getUserName ,calls the chatService.
+//  * @param getUsers ,calls the chatService fetches all the available users and filters out the Current.
+//  * @param storeMsg,
+//  */
+// app.controller('controllerChat', function ($scope, chatService, SocketService) {
+//     try {
+//         console.log('ChatCntr called');
+//         $scope.msgData = [];
+//         $scope.getUser = function ($scope) {
+//             chatService.getUserServiceData($scope);
+//         }
+//         $scope.getUser($scope);
+
+
+//         $scope.person = function (x) {
+//             localStorage.setItem('receiverId', x._id);
+//             localStorage.setItem('receiverName', x.firstName);
+//             $scope.getUserMsg();
+//         }
+//         $scope.getUserMsg = function () {
+//             chatService.getUserMsgService($scope);
+//         }
+//         $scope.sendMsg = () => {
+//             let sendMsgData = {
+//                 from: localStorage.getItem('loginId'),
+//                 to: localStorage.getItem('receiverId'),
+//                 msg: $scope.msg
+//             }
+//             console.log('sendmsg data=>', sendMsgData);
+//             SocketService.emit('newMsg', sendMsgData);
+//             $scope.msgData.push(sendMsgData);
+//         }
+//         var senderId = localStorage.getItem('loginId');
+//         SocketService.on(senderId, (message) => {
+//             console.log('msg emitted from server=>', message);
+//             if (localStorage.getItem('receiverId') == message.to) {
+//                 if ($scope.msgData == undefined) $scope.msgData = message
+//                 else $scope.msgData.push(message), console.log('msgdata in scope', $scope.msgData)
+//             }
+
+//         })
+//         $scope.clearTextArea = () => {
+//             console.log('in clear test area');
+//             $scope.msg = '';
+//         }
+//         $scope.logout = () => {
+//             $location.path('/login')
+//         }
+//     } catch (e) {
+//         console.log(e);
+//     }
+// })

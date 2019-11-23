@@ -46,22 +46,15 @@ app.use(express.static('../client'));
 var server = app.listen(3000, () => {
     console.log("Server is listing on port 3000");
 });
-var io = require('socket.io').listen(server);
-io.on('connection', (socket => {
-    console.log('socket on');
-    socket.on('message', (data => {
-        controller.sendMessage((data), (err, res) => {
-            if (err) console.log('failed on socket');
-            else {
-                console.log('message successfully emitted');
-                io.sockets.emit('list updated', res);
-            }
-        })
-    }))
+const io = require('socket.io').listen(server);
+io.on('connection', (socket) => {
+    console.log('user connected now...')
+    socket.on('newMsg', data => {
+        console.log('data of socket', data);
+        controller.sendMessage(data);
 
-}))
-io.on('disconnect', function () {
-    console.log('socket disconnected');
+    })
 
 })
+
 module.exports = app

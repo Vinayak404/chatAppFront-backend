@@ -1,22 +1,25 @@
+/**
+ * @desc operation starts when services is invoked.
+ * @param login, ,invokes when the login is called. 
+ * @param register, ,invokes when the register is invoked
+ * @param forgotPasasword, ,invokes when the forgot password is invoked
+ * @param resetPassword, ,invokes when the the url link in invoked.   
+ * @param $scope ,inheriates the parent process $rootScope,which can be used throught this session.
+ */
 app.service('services', function ($http, $location) {
-
 
     this.login = (data, $scope) => {
         try {
-
-            console.log('here in login services', data);
             //uses http to send request via json file havinf method, url and login data.
             $http({
                 method: 'POST',
                 url: 'http://localhost:3000/login',
                 data: data
             }).then((response) => {
-                console.log('here in login services', response);
-                let user = response.data.data
-                console.log("data jhg=>", user.email);
-                // let email = user.email;
-                localStorage.setItem('user', user.email);
-                console.log("Login sucessfull", response);
+                console.log('Response in login services', response);
+                console.log("firstname", response.data.data.firstName);
+                localStorage.setItem('firstName', response.data.data.firstName);
+                localStorage.setItem('senderId', response.data.data._id);
                 $location.path('/dashBoard')
             }).catch((response) => {
                 $scope.result = "Please check the login details";

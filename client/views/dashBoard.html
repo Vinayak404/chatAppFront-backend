@@ -11,52 +11,30 @@
 <body>
     <div ng-controller='controllerChat' class="page">
         <label class="display-5">
-            <strong>Welcome back,{{userName}}</strong>
+            <strong>Welcome back,{{currUser}}</strong>
         </label>
         <div class="buttonas"><button class="button" ng-click="logout()">
                 <a href='http://localhost:3000/#!/login'>Log-Out</a></div></button>
         <div class=" UsersmessageBox">
             <div class='getUsers'>
                 <div>
-                    <ol ng-repeat='user in allUsers'>
-                        <li ng-click="person(user.firstName)">
-                            {{user.firstName}}
-                        </li>
-                    </ol>
+                    <h6 ng-repeat="x in userData" ng-click="person(x)" ng-show='currUser != x.firstName'>
+                        <button class="userButton" type="submit">{{x.firstName}}</button></h6>
                 </div>
-                <!-- <div class='rows'>
-                    <div>
-                        <div class='button' id="navi-color-body">
-                            <button class='button'>
-                                <strong>{{receiverEmail}}</strong>
-                            </button>
-                            <div ng-repeat='chat in msgs' class="chat">
-                                <p class="chatMsg" ng-show="chat.from!=userEmail"
-                                    style="text-align: left ;color:blueviolet">
-                                    {{chat.from}}:::<strong>{{chat.msg}}</strong></chat>
-                                </p>
-                                <p class="chatMsg" ng-show="chat.from==userEmail"
-                                    style="text-align: right;color:darkred">
-                                    <strong>{{chat.msg}}</strong></p>
-                            </div>
-                        </div>
-                    </div>
-                </div> -->
+                
             </div>
             <div class="messageWindow">
                 <div class="messages">
                     <div class='rows'>
                         <div>
                             <div>
-                                <button class='button'>
-                                    <strong>{{receiverEmail}}</strong>
-                                </button>
-                                <div ng-repeat=' messageDetails in msgs' class="chat">
-                                    <p class="chatMsg" ng-show="messageDetails.from!=userEmail"
+                                <strong>{{chat.senderId}}</strong>
+                                <div ng-repeat=' chat in msgData' class="chat">
+                                    <p class="chatMsg" ng-show="currUserID==chat.from"
                                         style="text-align: left ;color:blueviolet">
-                                        {{chat.from}}=><strong>{{chat.msg}}</strong></chat>
+                                        <strong>{{chat.msg}}</strong>
                                     </p>
-                                    <p class="chatMsg" ng-show="messageDetails.from==userEmail"
+                                    <p class="chatMsg" ng-show="currUserId!=chat.to"
                                         style="text-align: right;color:darkred">
                                         <strong>{{chat.msg}}</strong></p>
                                 </div>
@@ -64,10 +42,10 @@
                         </div>
                     </div>
                 </div>
-                <div class="sendMsg">
+                <div autoscroll="true" class="sendMsg">
                     <input type="text" name="msg" ng-model="msg" placeholder="Type your messages here"
-                        style="width:300px" ng-keyup='$event.KeyCode==13 && storeMsg()'>
-                    <button ng-click="storeMsg()" class="register-button"> Send</button> </div>
+                        style="width:300px" ng-keyup='storeMsg()'>
+                    <button ng-click="sendMsg(msg);clearTextArea()" class="register-button"> Send</button> </div>
             </div>
         </div>
     </div>

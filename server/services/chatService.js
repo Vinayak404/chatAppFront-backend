@@ -17,10 +17,11 @@ exports.getUsers = (req, callBack) => {
 //redirects to the model where it takes the message from the user ,from,to and stores it in the database
 exports.sendMessage = (req, callback) => {
     try {
-        console.log("get user in services");
+        console.log("get user in services", req);
         model.sendMessage(req, (err, data) => {
-            if (err) callback(err)
-            else callback(null, data)
+            if (err) {
+                return callback(err)
+            } else return callback(null, data)
         })
     } catch (e) {
         console.log(e)
@@ -35,6 +36,6 @@ exports.getMessage = (req, callback) => {
             else callback(null, data)
         })
     } catch (e) {
-        console.log(e);
+        console.log("error in get message", e);
     }
 }
